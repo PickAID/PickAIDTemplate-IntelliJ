@@ -1,0 +1,27 @@
+<idea-plugin>
+    <id>cn.mihono.pickaid.template.intellij</id>
+    <name>PickAID Template Assistant</name>
+    <vendor email="pickaid@example.com" url="https://github.com/PickAID/PickAIDTemplate-IntelliJ">PickAID</vendor>
+
+    <description><![CDATA[
+        Editor assistance for PickAID Minecraft template project.toml files.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>org.toml.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <completion.contributor
+            language="TOML"
+            implementationClass="cn.mihono.pickaid.intellij.completion.PickAidProjectTomlCompletionContributor"/>
+
+        <localInspection
+            language="TOML"
+            groupPath="PickAID"
+            shortName="PickAidProjectToml"
+            displayName="Validate PickAID template TOML"
+            enabledByDefault="true"
+            level="WARNING"
+            implementationClass="cn.mihono.pickaid.intellij.inspection.PickAidProjectTomlInspection"/>
+    </extensions>
+</idea-plugin>

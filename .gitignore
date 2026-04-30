@@ -1,0 +1,11 @@
+.gradle/
+.idea/
+.intellijPlatform/
+build/
+out/
+
+*.iml
+*.ipr
+*.iws
+
+docs/superpowers/
