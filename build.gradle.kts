@@ -29,7 +29,7 @@ kotlin {
 
 intellijPlatform {
     pluginConfiguration {
-        id = "cn.mihono.pickaid.template.intellij"
+        id = "cn.mihono.pickaid.template.assistant"
         name = "PickAID Template Assistant"
         version = project.version.toString()
 
