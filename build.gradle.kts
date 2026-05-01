@@ -48,6 +48,21 @@ intellijPlatform {
             recommended()
         }
     }
+
+    publishing {
+        token.set(providers.environmentVariable("PUBLISH_TOKEN"))
+        channels.set(
+            providers.environmentVariable("PUBLISH_CHANNEL")
+                .map { value -> value.split(',').map { it.trim() }.filter { it.isNotEmpty() } }
+                .orElse(listOf("default")),
+        )
+    }
+
+    signing {
+        certificateChain.set(providers.environmentVariable("CERTIFICATE_CHAIN"))
+        privateKey.set(providers.environmentVariable("PRIVATE_KEY"))
+        password.set(providers.environmentVariable("PRIVATE_KEY_PASSWORD"))
+    }
 }
 
 tasks {
