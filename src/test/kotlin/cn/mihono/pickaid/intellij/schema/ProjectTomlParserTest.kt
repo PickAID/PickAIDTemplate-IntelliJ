@@ -85,6 +85,7 @@ class ProjectTomlParserTest {
         assertTrue(PickAidTemplateSchema.isKnownTable("publish.modrinth"))
         assertTrue(PickAidTemplateSchema.isKnownTable("publish.curseforge"))
         assertEquals(ValueKind.String, PickAidTemplateSchema.keySpec("publish.mods", "changelog_file")?.kind)
+        assertEquals(ValueKind.Enum, PickAidTemplateSchema.keySpec("publish.mods", "changelog_section")?.kind)
         assertEquals(ValueKind.Boolean, PickAidTemplateSchema.keySpec("publish", "publish_maven_before_upload")?.kind)
         assertEquals(ValueKind.StringArray, PickAidTemplateSchema.keySpec("publish.curseforge", "game_versions")?.kind)
     }

@@ -145,6 +145,13 @@ object PickAidTemplateSchema {
         KeySpec("changelog", ValueKind.String, "Inline changelog for the uploaded version.", defaultInsertText = "\"\""),
         KeySpec("changelog_file", ValueKind.String, "Path to changelog text used for the uploaded version.", defaultInsertText = "\"CHANGELOG.md\""),
         KeySpec(
+            "changelog_section",
+            ValueKind.Enum,
+            "How changelog_file is read. version extracts the current version section; full uploads the whole file.",
+            enumValues = listOf("version", "full"),
+            defaultInsertText = "\"version\"",
+        ),
+        KeySpec(
             "changelog_type",
             ValueKind.Enum,
             "Changelog markup type.",
@@ -161,6 +168,13 @@ object PickAidTemplateSchema {
         KeySpec("version_name", ValueKind.String, "Modrinth version name override.", defaultInsertText = "\"[{mc_version}] {mod_name} {version}\""),
         KeySpec("changelog", ValueKind.String, "Modrinth inline changelog for this upload.", defaultInsertText = "\"\""),
         KeySpec("changelog_file", ValueKind.String, "Path to Modrinth changelog text.", defaultInsertText = "\"CHANGELOG.md\""),
+        KeySpec(
+            "changelog_section",
+            ValueKind.Enum,
+            "How changelog_file is read. version extracts the current version section; full uploads the whole file.",
+            enumValues = listOf("version", "full"),
+            defaultInsertText = "\"version\"",
+        ),
         KeySpec("game_versions", ValueKind.StringArray, "Minecraft versions for Modrinth.", defaultInsertText = "[\"26.1.2\"]"),
         KeySpec("loaders", ValueKind.StringArray, "Loaders for Modrinth.", defaultInsertText = "[\"neoforge\"]"),
         KeySpec("sync_body_file", ValueKind.String, "Markdown file used to sync the Modrinth project body.", defaultInsertText = "\"README.MD\""),
@@ -173,6 +187,13 @@ object PickAidTemplateSchema {
         KeySpec("display_name", ValueKind.String, "CurseForge display name override.", defaultInsertText = "\"[{mc_version}] {mod_name} - {version}\""),
         KeySpec("changelog", ValueKind.String, "CurseForge inline changelog for this upload.", defaultInsertText = "\"\""),
         KeySpec("changelog_file", ValueKind.String, "Path to CurseForge changelog text.", defaultInsertText = "\"CHANGELOG.md\""),
+        KeySpec(
+            "changelog_section",
+            ValueKind.Enum,
+            "How changelog_file is read. version extracts the current version section; full uploads the whole file.",
+            enumValues = listOf("version", "full"),
+            defaultInsertText = "\"version\"",
+        ),
         KeySpec(
             "changelog_type",
             ValueKind.Enum,
