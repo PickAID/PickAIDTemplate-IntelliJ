@@ -78,4 +78,14 @@ class ProjectTomlParserTest {
         assertTrue(PickAidTemplateSchema.isKnownTable("native_libraries.physics"))
         assertTrue(PickAidTemplateSchema.isKnownTable("mod_relations.optional"))
     }
+
+    @Test
+    fun `schema knows refined publish tables`() {
+        assertTrue(PickAidTemplateSchema.isKnownTable("publish.mods"))
+        assertTrue(PickAidTemplateSchema.isKnownTable("publish.modrinth"))
+        assertTrue(PickAidTemplateSchema.isKnownTable("publish.curseforge"))
+        assertEquals(ValueKind.String, PickAidTemplateSchema.keySpec("publish.mods", "changelog_file")?.kind)
+        assertEquals(ValueKind.Boolean, PickAidTemplateSchema.keySpec("publish", "publish_maven_before_upload")?.kind)
+        assertEquals(ValueKind.StringArray, PickAidTemplateSchema.keySpec("publish.curseforge", "game_versions")?.kind)
+    }
 }

@@ -116,6 +116,7 @@ object PickAidTemplateSchema {
 
     private val publishKeys = listOf(
         KeySpec("maven_url", ValueKind.Url, "Maven repository URL.", defaultInsertText = "\"\""),
+        KeySpec("publish_maven_before_upload", ValueKind.Boolean, "Run Maven publishing before Modrinth or CurseForge upload.", defaultInsertText = "false"),
         KeySpec("maven_user", ValueKind.String, "Temporary Maven username fallback. Prefer project.local.toml or environment variables.", defaultInsertText = "\"\""),
         KeySpec("maven_password", ValueKind.String, "Temporary Maven password fallback. Prefer project.local.toml or environment variables.", defaultInsertText = "\"\""),
         KeySpec("modrinth_token", ValueKind.String, "Temporary Modrinth token fallback. Prefer project.local.toml or environment variables.", defaultInsertText = "\"\""),
@@ -129,6 +130,59 @@ object PickAidTemplateSchema {
             enumValues = listOf("alpha", "beta", "release"),
             defaultInsertText = "\"alpha\"",
         ),
+    )
+
+    private val publishModsKeys = listOf(
+        KeySpec(
+            "release_type",
+            ValueKind.Enum,
+            "Shared upload release channel.",
+            enumValues = listOf("alpha", "beta", "release"),
+            defaultInsertText = "\"alpha\"",
+        ),
+        KeySpec("version_name", ValueKind.String, "Shared platform version name. Supports template tokens.", defaultInsertText = "\"[{mc_version}] {mod_name} {version}\""),
+        KeySpec("display_name", ValueKind.String, "Shared CurseForge display name. Supports template tokens.", defaultInsertText = "\"[{mc_version}] {mod_name} - {version}\""),
+        KeySpec("changelog", ValueKind.String, "Inline changelog for the uploaded version.", defaultInsertText = "\"\""),
+        KeySpec("changelog_file", ValueKind.String, "Path to changelog text used for the uploaded version.", defaultInsertText = "\"CHANGELOG.md\""),
+        KeySpec(
+            "changelog_type",
+            ValueKind.Enum,
+            "Changelog markup type.",
+            enumValues = listOf("text", "markdown", "html"),
+            defaultInsertText = "\"markdown\"",
+        ),
+        KeySpec("game_versions", ValueKind.StringArray, "Minecraft versions for platform upload.", defaultInsertText = "[\"26.1.2\"]"),
+        KeySpec("loaders", ValueKind.StringArray, "Mod loaders for platform upload.", defaultInsertText = "[\"neoforge\"]"),
+    )
+
+    private val publishModrinthKeys = listOf(
+        KeySpec("project", ValueKind.String, "Modrinth project slug or id. Blank disables Modrinth upload.", defaultInsertText = "\"\""),
+        KeySpec("token", ValueKind.String, "Local Modrinth token fallback. Prefer project.local.toml or MODRINTH_TOKEN.", defaultInsertText = "\"\""),
+        KeySpec("version_name", ValueKind.String, "Modrinth version name override.", defaultInsertText = "\"[{mc_version}] {mod_name} {version}\""),
+        KeySpec("changelog", ValueKind.String, "Modrinth inline changelog for this upload.", defaultInsertText = "\"\""),
+        KeySpec("changelog_file", ValueKind.String, "Path to Modrinth changelog text.", defaultInsertText = "\"CHANGELOG.md\""),
+        KeySpec("game_versions", ValueKind.StringArray, "Minecraft versions for Modrinth.", defaultInsertText = "[\"26.1.2\"]"),
+        KeySpec("loaders", ValueKind.StringArray, "Loaders for Modrinth.", defaultInsertText = "[\"neoforge\"]"),
+        KeySpec("sync_body_file", ValueKind.String, "Markdown file used to sync the Modrinth project body.", defaultInsertText = "\"README.MD\""),
+        KeySpec("debug", ValueKind.Boolean, "Run Minotaur upload in debug mode without uploading.", defaultInsertText = "false"),
+    )
+
+    private val publishCurseforgeKeys = listOf(
+        KeySpec("project", ValueKind.Integer, "CurseForge numeric project id. Zero disables CurseForge upload.", defaultInsertText = "0"),
+        KeySpec("token", ValueKind.String, "Local CurseForge token fallback. Prefer project.local.toml or CURSEFORGE_TOKEN.", defaultInsertText = "\"\""),
+        KeySpec("display_name", ValueKind.String, "CurseForge display name override.", defaultInsertText = "\"[{mc_version}] {mod_name} - {version}\""),
+        KeySpec("changelog", ValueKind.String, "CurseForge inline changelog for this upload.", defaultInsertText = "\"\""),
+        KeySpec("changelog_file", ValueKind.String, "Path to CurseForge changelog text.", defaultInsertText = "\"CHANGELOG.md\""),
+        KeySpec(
+            "changelog_type",
+            ValueKind.Enum,
+            "CurseForge changelog markup type.",
+            enumValues = listOf("text", "markdown", "html"),
+            defaultInsertText = "\"markdown\"",
+        ),
+        KeySpec("game_versions", ValueKind.StringArray, "CurseForge game version labels.", defaultInsertText = "[\"26.1.2\", \"NeoForge\"]"),
+        KeySpec("manual_release", ValueKind.Boolean, "Mark CurseForge upload as manual release.", defaultInsertText = "false"),
+        KeySpec("parent_file_id", ValueKind.Integer, "CurseForge parent file id for child files.", defaultInsertText = "0"),
     )
 
     private val namingKeys = listOf(
@@ -176,7 +230,10 @@ object PickAidTemplateSchema {
         TableSpec("repositories", "Additional Maven repositories.", allowsArbitraryKeys = true, keyValueExample = "custom_repo = \"https://repo.example.com/releases\""),
         TableSpec("dependencies", "Container for dependency buckets.", allowsArbitraryKeys = false),
         TableSpec("metadata", "Optional mod metadata.", metadataKeys),
-        TableSpec("publish", "Publishing configuration.", publishKeys),
+        TableSpec("publish", "Maven publishing plus legacy flat platform upload keys.", publishKeys),
+        TableSpec("publish.mods", "Shared Modrinth and CurseForge upload defaults.", publishModsKeys),
+        TableSpec("publish.modrinth", "Modrinth upload configuration.", publishModrinthKeys),
+        TableSpec("publish.curseforge", "CurseForge upload configuration.", publishCurseforgeKeys),
         TableSpec("naming", "Artifact naming.", namingKeys),
         TableSpec("run", "Local run configuration, usually in project.local.toml.", runKeys),
     )
